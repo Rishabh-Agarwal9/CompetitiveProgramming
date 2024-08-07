@@ -11,6 +11,16 @@ typedef long long int ll;
 ll gcd (ll a, ll b) {
     return b ? gcd (b, a % b) : a;
 }
+//mmi
+ll inv(ll a) {
+  return a <= 1 ? a : mod - (ll)(mod/a) * inv(mod % a) % mod;
+}
+
+//make a fact vect filled to maxN you want to query.
+long long binomial_coefficient(ll n, ll k, vector<ll> &fact) {
+    if(k>n) return 0;
+    return fact[n] * inv(fact[k] * fact[n - k] % mod) % mod;
+}
 
 void print(vi &a){
     for(auto x : a){
@@ -18,15 +28,7 @@ void print(vi &a){
     }
     cout << "\n";
 }
-void print(int &a){
-    cout << a << " ";
-}
-void print(string &s){
-    cout << s << " ";
-}
-void print(pair<int,int> &p){
-    cout << p.first << " " << p.second << "\n";
-}
+
 void solve(){
 
 }
