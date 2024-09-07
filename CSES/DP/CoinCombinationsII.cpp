@@ -28,30 +28,37 @@ void print(vi &a){
     }
     cout << "\n";
 }
+ll n,x;
+vector<ll> coins;
+
 
 void solve(){
-    ll n ;
-    cin>>n;
-    vector<ll> dp(n+1,0);
-    dp[1]=1;
-    dp[0]=1;
-    for(int i=2;i<=n;i++){
-        for(int j=1;j<=6;j++){
-            if(i-j<0){
-                break;
+    cin>>n>>x;
+    coins.resize(n);
+    for(int i=0;i<n;i++){
+        cin>>coins[i];
+    }
+    sort(coins.begin(), coins.end());
+    
+    vector<vector<ll>> dp( n+1 , vector<ll> (x+1,0));
+    dp[0][0] = 1;
+
+    for(int i=1;i<=n;i++){
+        for(int j=0;j<=x;j++){
+            dp[i][j]=dp[i-1][j];
+            if(j - coins[i-1]>=0){
+                dp[i][j]+=dp[i][j - coins[i-1]];
             }
-            dp[i]+= dp[i-j];
-            dp[i]%=mod;
+            dp[i][j]%=mod;
         }
     }
-   
-    cout<<dp[n]%mod<<"\n";
-}   
+    cout<<dp[n][x]<<"\n";
+}
 
 int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    solve();
+    solve();    
     return 0;
 }
